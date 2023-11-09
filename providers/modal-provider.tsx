@@ -1,5 +1,6 @@
 "use client";
 
+import MobileModal from "@/components/modal/mobile-modal";
 import React, { useEffect, useState } from "react";
 
 export default function ModalProvider() {
@@ -15,7 +16,7 @@ export default function ModalProvider() {
 
   return (
     <div>
-      <div className='max-w-[640px]'></div>
+      <MobileModal />
     </div>
   );
 }

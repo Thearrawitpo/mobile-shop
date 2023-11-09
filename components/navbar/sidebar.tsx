@@ -2,16 +2,16 @@
 import React, { useEffect } from "react";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import useSidebar from "@/hooks/use-sidebar";
-// import { useUser } from "@/hooks/use-user";
 import Login from "./login";
 import Menu from "./menu";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type SidebarProps = {};
 
 export default function Sidebar({}: SidebarProps) {
-  // const { user } = useUser();
-  const user = true;
+  const { data: session } = useSession();
+
   const pathname = usePathname();
   const sidebar = useSidebar();
   const onChange = (open: boolean) => {
@@ -28,7 +28,7 @@ export default function Sidebar({}: SidebarProps) {
         <SheetContent className='overflow-auto'>
           <SheetHeader>
             <div className='font-medium py-2'>
-              {!!user ? <Menu /> : <Login />}
+              {!!true ? <Menu /> : <Login />}
             </div>
           </SheetHeader>
         </SheetContent>

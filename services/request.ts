@@ -18,7 +18,7 @@ export const request = async ({
 }: RequestType) => {
   const tokens = { accessToken: "" };
 
-  const path = "http://localhost:8000/api/v1";
+  const path = "/api";
 
   const handleGetDelete = async () => {
     if (!!tokens) {
