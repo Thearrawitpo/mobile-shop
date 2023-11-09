@@ -1,9 +1,10 @@
 import { db } from "@/lib/db";
 import { compare } from "bcrypt";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import { AuthOptions } from "next-auth";
+import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
