@@ -20,72 +20,47 @@ export const request = async ({
 
   const path = "/api";
 
-  const handleGetDelete = async () => {
-    if (!!tokens) {
-      const res = await axios({
-        method: method,
-        url: `${path}${url}`,
-        headers: {
-          "Content-Type": contentType,
-          Authorization: "Bearer " + String(tokens.accessToken),
-        },
-      });
-      if (res.status === 200 || res.status === 204) {
-        return res.data;
-      } else {
-        toast.error("Failed to fetch");
-        return null;
+  const headers = !!tokens
+    ? {
+        "Content-Type": contentType,
+        Authorization: "Bearer " + String(tokens.accessToken),
       }
-    } else {
+    : {
+        "Content-Type": contentType,
+      };
+
+  const handleGetDelete = async () => {
+    try {
       const res = await axios({
         method: method,
         url: `${path}${url}`,
-        headers: {
-          "Content-Type": contentType,
-        },
+        headers: headers,
       });
-      if (res.status === 200 || res.status === 204) {
-        return res.data;
+      return res.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message || error.message);
       } else {
-        toast.error("Failed to fetch");
-        return null;
+        console.error(error);
       }
     }
   };
 
   const handlePostPatch = async () => {
-    if (!!tokens) {
+    try {
       const res = await axios({
         method: method,
         url: `${path}${url}`,
-        headers: {
-          "Content-Type": contentType,
-          Authorization: "Bearer " + String(tokens.accessToken),
-        },
+        headers: headers,
         data: body,
       });
-      if (res.status === 200 || res.status === 201) {
-        {
-          isToast && toast.success("Success");
-        }
-        return res.data || null;
+      isToast && toast.success("Success");
+      return res.data || null;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message || error.message);
       } else {
-        toast.error("Failed to Create of Update");
-      }
-    } else {
-      const res = await axios({
-        method: method,
-        url: `${path}${url}`,
-        headers: {
-          "Content-Type": contentType,
-        },
-        data: body,
-      });
-      if (res.status === 200 || res.status === 201) {
-        toast.success("Success");
-        return res.data || null;
-      } else {
-        toast.error("Failed to Create of Update");
+        console.error(error);
       }
     }
   };
